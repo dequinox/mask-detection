@@ -39,6 +39,7 @@ function startCapture() {
     resizeCanvas(600, 500);
     img = null;
     image(capture, 0, 0);
+    sendCanvas(canvas.elt.toDataURL());
 }
 
 async function sendCanvas(image64) {
@@ -52,7 +53,9 @@ async function sendCanvas(image64) {
     };
 
     const response = await fetch('/', options);
-    const json = await response.json();
-    img = createImg(json.image64, '');
+    text = await response.text();
+    text = 'data:image/jpeg;base64,' + text
+    console.log(text)
+    img = createImg(text, '');
     img.hide();
 }
